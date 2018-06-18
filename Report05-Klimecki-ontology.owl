@@ -1,0 +1,448 @@
+@prefix : <http://www.gklimecki.onto.com/something#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.gklimecki.onto.com/something#> .
+
+<http://www.gklimecki.onto.com/something#> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.gklimecki.onto.com/something#containsMusic
+:containsMusic rdf:type owl:ObjectProperty .
+
+
+###  http://www.gklimecki.onto.com/something#containsMusicPerformedBy
+:containsMusicPerformedBy rdf:type owl:ObjectProperty .
+
+
+###  http://www.gklimecki.onto.com/something#containsMusicPerformedOn
+:containsMusicPerformedOn rdf:type owl:ObjectProperty .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.gklimecki.onto.com/something#publishedIn
+:publishedIn rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain :Book ,
+                         :MusicCD ;
+             rdfs:range xsd:dateTime .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.gklimecki.onto.com/something#ACapellaMixMusicCD
+:ACapellaMixMusicCD rdf:type owl:Class ;
+                    rdfs:subClassOf :MusicCD ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :containsMusic ;
+                                      owl:someValuesFrom :GregorianChant
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :containsMusic ;
+                                      owl:someValuesFrom :JewishCantillation
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :containsMusic ;
+                                      owl:someValuesFrom :MuslimAnaseheed
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :containsMusic ;
+                                      owl:allValuesFrom [ rdf:type owl:Class ;
+                                                          owl:unionOf ( :GregorianChant
+                                                                        :JewishCantillation
+                                                                        :MuslimAnaseheed
+                                                                      )
+                                                        ]
+                                    ] .
+
+
+###  http://www.gklimecki.onto.com/something#ACapellaMusic
+:ACapellaMusic rdf:type owl:Class ;
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:unionOf ( :GregorianChant
+                                                   :JewishCantillation
+                                                   :MuslimAnaseheed
+                                                 )
+                                   ] ;
+               rdfs:subClassOf :Music .
+
+
+###  http://www.gklimecki.onto.com/something#ACapellaMusicCD
+:ACapellaMusicCD rdf:type owl:Class ;
+                 owl:equivalentClass [ owl:intersectionOf ( :MusicCD
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty :containsMusic ;
+                                                              owl:allValuesFrom :ACapellaMusic
+                                                            ]
+                                                          ) ;
+                                       rdf:type owl:Class
+                                     ] .
+
+
+###  http://www.gklimecki.onto.com/something#AcousticGuitarInstrument
+:AcousticGuitarInstrument rdf:type owl:Class ;
+                          rdfs:subClassOf :GuitarInstrument .
+
+
+###  http://www.gklimecki.onto.com/something#AlternativeRockMusicCD
+:AlternativeRockMusicCD rdf:type owl:Class ;
+                        rdfs:subClassOf :RockMusicCD ;
+                        owl:disjointWith :ProgressiveRockMusicCD .
+
+
+###  http://www.gklimecki.onto.com/something#ArcheologyBook
+:ArcheologyBook rdf:type owl:Class ;
+                rdfs:subClassOf :ScienceBook .
+
+
+###  http://www.gklimecki.onto.com/something#ArtificialIntelligenceBook
+:ArtificialIntelligenceBook rdf:type owl:Class ;
+                            rdfs:subClassOf :ScienceBook .
+
+
+###  http://www.gklimecki.onto.com/something#Artist
+:Artist rdf:type owl:Class .
+
+
+###  http://www.gklimecki.onto.com/something#BandMusicCD
+:BandMusicCD rdf:type owl:Class ;
+             rdfs:subClassOf :MusicCD .
+
+
+###  http://www.gklimecki.onto.com/something#BaroqueMusicGenre
+:BaroqueMusicGenre rdf:type owl:Class ;
+                   rdfs:subClassOf :MusicGenre .
+
+
+###  http://www.gklimecki.onto.com/something#BaroqueOrganMusicCD
+:BaroqueOrganMusicCD rdf:type owl:Class ;
+                     rdfs:subClassOf :MusicCD ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty :containsMusic ;
+                                       owl:someValuesFrom :BaroqueMusicGenre
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty :containsMusicPerformedOn ;
+                                       owl:someValuesFrom :OrganInstrument
+                                     ] .
+
+
+###  http://www.gklimecki.onto.com/something#Book
+:Book rdf:type owl:Class ;
+      rdfs:subClassOf [ rdf:type owl:Restriction ;
+                        owl:onProperty :publishedIn ;
+                        owl:someValuesFrom xsd:dateTime
+                      ] .
+
+
+###  http://www.gklimecki.onto.com/something#ClassicalGuitarInstrument
+:ClassicalGuitarInstrument rdf:type owl:Class ;
+                           rdfs:subClassOf :GuitarInstrument .
+
+
+###  http://www.gklimecki.onto.com/something#ClassicalMusicCD
+:ClassicalMusicCD rdf:type owl:Class ;
+                  rdfs:subClassOf :MusicCD .
+
+
+###  http://www.gklimecki.onto.com/something#ComedyMovie
+:ComedyMovie rdf:type owl:Class ;
+             rdfs:subClassOf :Movie .
+
+
+###  http://www.gklimecki.onto.com/something#ComputerGame
+:ComputerGame rdf:type owl:Class .
+
+
+###  http://www.gklimecki.onto.com/something#ComputerScienceBook
+:ComputerScienceBook rdf:type owl:Class ;
+                     rdfs:subClassOf :ScienceBook .
+
+
+###  http://www.gklimecki.onto.com/something#DramaMovie
+:DramaMovie rdf:type owl:Class ;
+            rdfs:subClassOf :Movie .
+
+
+###  http://www.gklimecki.onto.com/something#ElectricGuitarInstrument
+:ElectricGuitarInstrument rdf:type owl:Class ;
+                          rdfs:subClassOf :GuitarInstrument .
+
+
+###  http://www.gklimecki.onto.com/something#FantasyBook
+:FantasyBook rdf:type owl:Class ;
+             rdfs:subClassOf :FictionBook ;
+             owl:disjointWith :ScienceFictionBook .
+
+
+###  http://www.gklimecki.onto.com/something#FantasyMovie
+:FantasyMovie rdf:type owl:Class ;
+              rdfs:subClassOf :Movie .
+
+
+###  http://www.gklimecki.onto.com/something#FictionBook
+:FictionBook rdf:type owl:Class ;
+             rdfs:subClassOf :Book ;
+             owl:disjointWith :ScienceBook .
+
+
+###  http://www.gklimecki.onto.com/something#GregorianChant
+:GregorianChant rdf:type owl:Class ;
+                rdfs:subClassOf :Music .
+
+
+###  http://www.gklimecki.onto.com/something#GuitarInstrument
+:GuitarInstrument rdf:type owl:Class ;
+                  rdfs:subClassOf :MusicInstrument .
+
+
+###  http://www.gklimecki.onto.com/something#GuitarMusicCD
+:GuitarMusicCD rdf:type owl:Class ;
+               owl:equivalentClass [ owl:intersectionOf ( :MusicCD
+                                                          [ rdf:type owl:Restriction ;
+                                                            owl:onProperty :containsMusicPerformedOn ;
+                                                            owl:someValuesFrom :GuitarInstrument
+                                                          ]
+                                                        ) ;
+                                     rdf:type owl:Class
+                                   ] .
+
+
+###  http://www.gklimecki.onto.com/something#HistoryMovie
+:HistoryMovie rdf:type owl:Class ;
+              rdfs:subClassOf :Movie .
+
+
+###  http://www.gklimecki.onto.com/something#JazzMusicCD
+:JazzMusicCD rdf:type owl:Class ;
+             rdfs:subClassOf :MusicCD .
+
+
+###  http://www.gklimecki.onto.com/something#JewishCantillation
+:JewishCantillation rdf:type owl:Class ;
+                    rdfs:subClassOf :Music .
+
+
+###  http://www.gklimecki.onto.com/something#JimiHendrix
+:JimiHendrix rdf:type owl:Class ;
+             rdfs:subClassOf :Artist .
+
+
+###  http://www.gklimecki.onto.com/something#JimiHendrixMusicCD
+:JimiHendrixMusicCD rdf:type owl:Class ;
+                    rdfs:subClassOf :MusicCD ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty :containsMusicPerformedOn ;
+                                      owl:someValuesFrom :ElectricGuitarInstrument
+                                    ] .
+
+
+###  http://www.gklimecki.onto.com/something#MetalMusicCD
+:MetalMusicCD rdf:type owl:Class ;
+              rdfs:subClassOf :MusicCD .
+
+
+###  http://www.gklimecki.onto.com/something#MetalMusicGenre
+:MetalMusicGenre rdf:type owl:Class ;
+                 rdfs:subClassOf :MusicGenre .
+
+
+###  http://www.gklimecki.onto.com/something#Movie
+:Movie rdf:type owl:Class .
+
+
+###  http://www.gklimecki.onto.com/something#Music
+:Music rdf:type owl:Class .
+
+
+###  http://www.gklimecki.onto.com/something#MusicCD
+:MusicCD rdf:type owl:Class ;
+         rdfs:subClassOf [ rdf:type owl:Restriction ;
+                           owl:onProperty :containsMusicPerformedBy ;
+                           owl:someValuesFrom :Artist
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :publishedIn ;
+                           owl:someValuesFrom xsd:dateTime
+                         ] .
+
+
+###  http://www.gklimecki.onto.com/something#MusicGenre
+:MusicGenre rdf:type owl:Class ;
+            rdfs:subClassOf :Music .
+
+
+###  http://www.gklimecki.onto.com/something#MusicInstrument
+:MusicInstrument rdf:type owl:Class .
+
+
+###  http://www.gklimecki.onto.com/something#MuslimAnaseheed
+:MuslimAnaseheed rdf:type owl:Class ;
+                 rdfs:subClassOf :Music .
+
+
+###  http://www.gklimecki.onto.com/something#NeuroscienceBook
+:NeuroscienceBook rdf:type owl:Class ;
+                  rdfs:subClassOf :ScienceBook .
+
+
+###  http://www.gklimecki.onto.com/something#OrganInstrument
+:OrganInstrument rdf:type owl:Class ;
+                 rdfs:subClassOf :MusicInstrument .
+
+
+###  http://www.gklimecki.onto.com/something#PhilosophyBook
+:PhilosophyBook rdf:type owl:Class ;
+                rdfs:subClassOf :ScienceBook .
+
+
+###  http://www.gklimecki.onto.com/something#PianoInstrument
+:PianoInstrument rdf:type owl:Class ;
+                 rdfs:subClassOf :MusicInstrument .
+
+
+###  http://www.gklimecki.onto.com/something#PolishMusicCD
+:PolishMusicCD rdf:type owl:Class ;
+               rdfs:subClassOf :MusicCD .
+
+
+###  http://www.gklimecki.onto.com/something#PolishMusicGenre
+:PolishMusicGenre rdf:type owl:Class ;
+                  rdfs:subClassOf :MusicGenre .
+
+
+###  http://www.gklimecki.onto.com/something#ProgressiveRockMusicCD
+:ProgressiveRockMusicCD rdf:type owl:Class ;
+                        rdfs:subClassOf :RockMusicCD .
+
+
+###  http://www.gklimecki.onto.com/something#PsychologyBook
+:PsychologyBook rdf:type owl:Class ;
+                rdfs:subClassOf :ScienceBook .
+
+
+###  http://www.gklimecki.onto.com/something#RiversideBandMusicCD
+:RiversideBandMusicCD rdf:type owl:Class ;
+                      rdfs:subClassOf :BandMusicCD ,
+                                      :PolishMusicCD ,
+                                      :ProgressiveRockMusicCD .
+
+
+###  http://www.gklimecki.onto.com/something#RockMusicCD
+:RockMusicCD rdf:type owl:Class ;
+             rdfs:subClassOf :MusicCD .
+
+
+###  http://www.gklimecki.onto.com/something#RockMusicGenre
+:RockMusicGenre rdf:type owl:Class ;
+                rdfs:subClassOf :MusicGenre .
+
+
+###  http://www.gklimecki.onto.com/something#ScienceBook
+:ScienceBook rdf:type owl:Class ;
+             rdfs:subClassOf :Book .
+
+
+###  http://www.gklimecki.onto.com/something#ScienceFictionBook
+:ScienceFictionBook rdf:type owl:Class ;
+                    rdfs:subClassOf :FictionBook .
+
+
+###  http://www.gklimecki.onto.com/something#ThrillerMovie
+:ThrillerMovie rdf:type owl:Class ;
+               rdfs:subClassOf :Movie .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ACapellaMixMusicCD
+                :BaroqueOrganMusicCD
+                :ClassicalMusicCD
+                :JazzMusicCD
+                :JimiHendrixMusicCD
+                :MetalMusicCD
+                :RockMusicCD
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :AcousticGuitarInstrument
+                :ClassicalGuitarInstrument
+                :ElectricGuitarInstrument
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ArcheologyBook
+                :ArtificialIntelligenceBook
+                :ComputerScienceBook
+                :NeuroscienceBook
+                :PhilosophyBook
+                :PsychologyBook
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Artist
+                :Book
+                :ComputerGame
+                :Movie
+                :Music
+                :MusicInstrument
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :BaroqueMusicGenre
+                :MetalMusicGenre
+                :PolishMusicGenre
+                :RockMusicGenre
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ComedyMovie
+                :DramaMovie
+                :FantasyMovie
+                :HistoryMovie
+                :ThrillerMovie
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :GregorianChant
+                :JewishCantillation
+                :MusicGenre
+                :MuslimAnaseheed
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :GuitarInstrument
+                :OrganInstrument
+                :PianoInstrument
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi
